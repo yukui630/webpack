@@ -10,5 +10,6 @@
      Asset     Size  Chunks             Chunk Names
     bundle.js  1.42 kB       0  [emitted]  main
     [0] ./app.js 33 bytes {0} [built]`
+ 
  4. 打开page.html 控制台
  5. 改代码...（copy，run，modify）
