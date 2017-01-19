@@ -46,10 +46,6 @@
 
 	'use strict';
 
-	var _bar = __webpack_require__(1);
-
-	var _bar2 = _interopRequireDefault(_bar);
-
 	var _vue = __webpack_require__(2);
 
 	var _vue2 = _interopRequireDefault(_vue);
@@ -59,31 +55,41 @@
 	var app = new _vue2.default({
 	  el: '#app',
 	  data: {
-	    message: 'Hello Vue!My first vue-demo.'
+	    newTodo: '',
+	    todoList: []
+	  },
+	  created: function created() {
+	    var _this = this;
+
+	    window.onbeforeunload = function () {
+	      var dataString = JSON.stringify(_this.todoList);
+	      window.localStorage.setItem('myTodos', dataString);
+	    };
+	    var oldDataString = window.localStorage.getItem('myTodos');
+	    var oldData = JSON.parse(oldDataString);
+	    this.todoList = oldData || [];
+	  },
+	  methods: {
+	    addTodo: function addTodo() {
+	      var time = new Date();
+	      this.todoList.push({
+	        title: this.newTodo,
+	        timeStr: time.getFullYear() + '年' + (time.getMonth() + 1) + '月' + time.getDate() + '日 ' + time.getHours() + ':' + time.getMinutes() + ':' + time.getSeconds(),
+	        done: false
+	      });
+	      this.newTodo = '';
+	    },
+	    removeTodo: function removeTodo(todo) {
+	      var index = this.todoList.indexOf(todo);
+	      this.todoList.splice(index, 1);
+	    }
 	  }
 	});
-	var app2 = new _vue2.default({
-	  el: '#app-2',
-	  data: {
-	    message: 'You loaded this page on ' + new Date()
-	  }
-	});
+
+	console.log(app.todoList);
 
 /***/ },
-/* 1 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = bar;
-	function bar() {
-	  alert('Hello Webpack!');
-	}
-
-/***/ },
+/* 1 */,
 /* 2 */
 /***/ function(module, exports, __webpack_require__) {
 
