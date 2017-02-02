@@ -1,0 +1,181 @@
+<html>
+  <head>
+    <meta charset=utf-8>
+    <style type="text/css">
+    html,body{
+    width: 100%;
+    height: 100%;
+    font-size: 20px;
+    }
+    ul,li{
+    margin: 0;
+    padding:0;
+    }
+    li{
+    list-style: none;
+    transition: all 0.5s;
+    }
+    #app{
+    width: 100%;
+    height: 100%;
+    }
+    .newTask{
+    width: 600px;
+    margin: 40px auto;
+    }
+    .newTask>input{
+    width: 500px;
+    height: 40px;
+    padding-left:10px;
+    border: solid 1px #ccc;
+    box-shadow:#ccc 5px 5px 5px;
+    }
+    .todos,.todoHead{
+    width: 880px;
+    margin: 0 auto;
+    }
+    .todoHead{
+    background: #6495ED;
+    color: #fff;
+    text-align: center;
+    }
+    .todoHead>div{
+    padding: 10px 0;
+    float: left;
+    border: 1px solid #E6E6FA;
+    }
+    .todos{
+    color: #6495ED;
+    }
+    .clearfix:after{
+    content: '';
+    display: block;
+    clear: both;
+    }
+    .todos>li div{
+    float: left;
+    height: 50px;
+    line-height: 50px;
+    border: 1px solid #E6E6FA;
+    }
+    .todos>li:hover{
+    background:#EFEFFF;
+    color:#0000CD;
+    }
+    .todoDetail{
+    width: 500px;
+    border-right: 0;
+    }
+    .todoDetail>input{
+    width: 20px;
+    height: 20px;
+    }
+    .createdTime{
+    width: 230px;
+    border-right: 0;
+    }
+    .isDone{
+    width: 86px;
+    border-right: 0;
+    }
+    .remove{
+    width: 56px;
+    }
+    .remove>span{
+    margin-left: 14px;
+    background: #CD5C5C;
+    border-radius: 30px;
+    color: #fff;
+    font-size: 25px;
+    cursor: pointer;
+    }
+    .remove>span:hover{
+    background: red;
+    }
+    .welcome{
+      color: #32CD32;
+      font-size: 26px;
+      font-weight: bolder;
+      text-shadow: 1px 1px 1px #ccc;
+    }
+    .logOut{
+      width: 80px;
+      height: 30px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background: #3CB371;
+      color: #fff;
+      box-shadow:2px 2px 3px #ccc;
+      cursor: pointer;
+    }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+    <section id="signInAndSignUp" v-if="!currentUser">
+      <div>
+        <label><input type="radio" name="type" value="signUp" v-model="actionType">注册</label>
+        <label><input type="radio" name="type" value="login" v-model="actionType">登入</label>
+      </div>
+      <div class="signUp" v-if="actionType=='signUp'"> <!-- 注意单引号，外面用了双引号，所以里面只能用单引号。 -->
+        <form @submit.prevent="signUp">  <!-- submit.prevent提交事件不再重载页面 -->
+          <div class="formRow">
+            用户名<input type="text" v-model="formData.username">
+          </div>
+          <div class="formRow">
+            密码<input type="password" v-model="formData.password">
+          </div>
+          <div class="formActions">
+            <input type="submit" value="注册">
+          </div>
+        </form>
+      </div>
+
+      <div class="login" v-if="actionType=='login'">
+        <form @submit.prevent="login">
+          <div class="formRow">
+            用户名<input type="text" v-model="formData.username">
+          </div>
+          <div class="formRow">
+            密码<input type="password" v-model="formData.password">
+          </div>
+          <div class="formActions">
+            <input type="submit" value="登入">
+          </div>          
+        </form>
+      </div>
+    </section>
+
+    <section id="todo" v-if="currentUser">
+    <input type="submit" value="退出登录" @click='logOut' class="logOut">
+    <span class="welcome">{{formData.username}} Welcome! This is your to-do list.</span>
+      <div class="newTask">
+        <input type="text" v-model="newTodo" @keyup.enter='addTodo' placeholder="输入待办事项">
+      </div>
+      
+      <div v-if="todoList.length != 0" class="todoHead clearfix">
+        <div class="todoDetail">待办事件</div>
+        <div class="createdTime">创建时间</div>
+        <div class="isDone">完成情况</div>
+        <div class="remove">删除</div>
+      </div>
+      <ul class="todos">
+        <li v-for="(todo,index) in todoList" class="clearfix">
+          <div class="todoDetail">
+            <input type="checkbox" v-model="todo.done">
+            {{index+1}}.{{todo.title}}
+          </div>
+          <div class="createdTime">{{todo.timeStr}}</div>
+          <div class="isDone">
+            <span v-if="todo.done">已完成</span>
+            <span v-else>未完成</span>
+          </div>
+          <div class="remove"><span @click='removeTodo(todo)'>×</span></div>
+        </li>
+      </ul>
+    </section>
+    
+  </div>
+  <script src="bundle.js"></script>
+</body>
+</html>
