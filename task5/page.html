@@ -162,7 +162,7 @@
       <ul class="todos">
         <li v-for="(todo,index) in todoList" class="clearfix">
           <div class="todoDetail">
-            <input type="checkbox" v-model="todo.done">
+            <input type="checkbox" v-model="todo.done" @change='saveOrUpdateTodos()'>
             {{index+1}}.{{todo.title}}
           </div>
           <div class="createdTime">{{todo.timeStr}}</div>
