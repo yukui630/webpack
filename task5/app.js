@@ -107,7 +107,7 @@ var app = new Vue({
         this.currentUser=this.getCurrentUser();
         // console.log(this.currentUser);
       },function(error){
-        alert('注册失败')
+        alert('注册失败，用户名已存在')
       });
     },
     login:function(){
@@ -115,7 +115,7 @@ var app = new Vue({
         this.currentUser=this.getCurrentUser();
         this.fetchTodos();
       },function(error){
-        alert('登录失败')
+        alert('登录失败，密码错误')
       });
     },
     getCurrentUser:function(){

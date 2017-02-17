@@ -166,7 +166,7 @@
 	        _this3.currentUser = _this3.getCurrentUser();
 	        // console.log(this.currentUser);
 	      }, function (error) {
-	        alert('注册失败');
+	        alert('注册失败，用户名已存在');
 	      });
 	    },
 	    login: function login() {
@@ -176,7 +176,7 @@
 	        _this4.currentUser = _this4.getCurrentUser();
 	        _this4.fetchTodos();
 	      }, function (error) {
-	        alert('登录失败');
+	        alert('登录失败，密码错误');
 	      });
 	    },
 	    getCurrentUser: function getCurrentUser() {
