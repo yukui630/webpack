@@ -37,24 +37,26 @@
     height: 40px;
     padding-left:10px;
     border: solid 1px #ccc;
-    box-shadow:#ccc 5px 5px 5px;
+    box-shadow:3px 3px 5px rgba(63,48,102,1);
     }
     .todos,.todoHead{
     width: 880px;
     margin: 0 auto;
     }
     .todoHead{
-    background: #6495ED;
+    background:rgba(63,48,102,0.4);
     color: #fff;
     text-align: center;
     }
     .todoHead>div{
     padding: 10px 0;
     float: left;
-    border: 1px solid #E6E6FA;
+    border: 1px solid rgba(255,255,255,0.5);
     }
     .todos{
-    color: #6495ED;
+    color: rgb(63,48,102);
+    background: rgba(255,255,255,0.9);
+    box-shadow: 1px 3px 5px rgba(63,48,102,1)
     }
     .clearfix:after{
     content: '';
@@ -65,11 +67,10 @@
     float: left;
     height: 50px;
     line-height: 50px;
-    border: 1px solid #E6E6FA;
+    border: 1px solid #ccc;
     }
     .todos>li:hover{
-    background:#EFEFFF;
-    color:#0000CD;
+    background:#fff;
     }
     .todoDetail{
     width: 500px;
@@ -102,19 +103,18 @@
     background: red;
     }
     .welcome{
-      color: #32CD32;
+      color: #fff;
       font-size: 26px;
       font-weight: bolder;
-      text-shadow: 1px 1px 1px #ccc;
+      text-shadow: 0 0 1px yellow;
     }
     .logOut{
       width: 80px;
       height: 30px;
+      color: #fff;
       border: 1px solid #ccc;
       border-radius: 5px;
-      background: #3CB371;
-      color: #fff;
-      box-shadow:2px 2px 3px #ccc;
+      background:rgba(63,48,102,0.9);
       cursor: pointer;
     }
     .ipt-psw{
@@ -130,7 +130,7 @@
       border-radius: 5px;
       background:rgba(63,48,102,0.9);
     }
-    .submit:hover{
+    .submit:hover,.logOut:hover{
       box-shadow: 0 0 5px #fff;
       background:rgba(60,44,90,1);
     }
