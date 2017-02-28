@@ -1,0 +1,260 @@
+<html>
+  <head>
+    <meta charset=utf-8>
+    <style type="text/css">
+    html,body{
+    margin:0;
+    width: 100%;
+    font-size: 20px;
+    }
+    body{
+      background: url(1.jpg) 0 0 no-repeat;
+      background-size: cover;
+    }
+    ul,li{
+    margin: 0;
+    padding:0;
+    }
+    li{
+    list-style: none;
+    transition: all 0.5s;
+    }
+    #signInAndSignUp{
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width:300px;
+      height:300px; 
+      margin: -200px 0 0 -200px;
+      color: #fff;
+      text-align: center;
+      border-radius: 10px;
+      background: rgba(83,68,122,0.5);
+    }
+    #signInAndSignUp .title{
+      background:rgba(255,255,255,0.5);
+      border-radius: 10px 10px 0 0;
+      padding: 10px 0;
+      font-size: 30px;
+      color: #fff;
+    }
+    #signInAndSignUp .checkbox{
+      padding: 10px;
+    }
+    #signInAndSignUp .checkbox li{
+      display: inline;
+    }
+    #signInAndSignUp .checkbox li:first-of-type{
+      margin-right: 56px;
+    }
+    .formRow p{
+      margin: 5px 0;
+      font-size: 20px;
+      color: #ccc;
+    }
+    .formRow input{
+      width: 250px;
+      height: 30px;
+      border:1px solid #ccc;
+      border-radius: 3px;
+      font-size: 18px;
+    }
+
+
+    #app{
+    width: 600px;
+    margin:0 auto;
+    }
+    .newTask{
+    margin: 40px 0;
+    }
+    .newTask>input{
+    width: 400px;
+    height: 40px;
+    padding-left:10px;
+    border: solid 1px #ccc;
+    box-shadow:5px 5px 2px rgba(0,0,0,0.5);
+    }
+    
+    .welcome{
+      margin:20px 0;
+      color: #a25ba0;
+    }
+    .logOut{
+      width: 80px;
+      height: 30px;
+      color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background:rgba(63,48,102,0.9);
+      cursor: pointer;
+    }
+    .submit{
+      margin:10px auto;
+      font-size: 16px;
+      padding: 5px 10px;
+      color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background:rgba(63,48,102,0);
+    }
+    .submit:hover,.logOut:hover{
+      box-shadow: 0 0 5px #fff;
+      background:rgba(60,44,90,1);
+    }
+    [v-cloak]{
+      display: none;
+    }
+    .todos{
+      color: #fff;
+      width: 540px;
+      border:1px solid #eee;
+      border-radius: 5px;
+      background:rgba(80,44,90,0.3);
+      box-shadow:7px 7px 3px rgba(0,0,0,0.2);
+/*      border-radius: 10px;*/
+    }
+    .todos>li{
+      position: relative;
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+      
+    }
+    .todos>li:first-of-type{
+      border-radius: 5px 5px 0 0;
+    }
+    .todos>li:last-of-type{
+      border-radius: 0 0 5px 5px;
+      border-bottom: 0;
+    }
+    .todos>li:hover .delete{
+      display: inline;
+    }
+    .todos>li:hover{
+      background: rgba(80,44,90,0.2)
+    }
+    .createdTime{
+      display: inline-block;
+      font-size: 12px;
+      margin-left: 50px;
+      color: #eee;
+    }
+    .delete{
+      display: none;
+      float: right;
+      line-height: 0.9em;
+      font-size: 28px;
+      color:#dc5135;
+      cursor: pointer;
+    }
+    .Done{
+      color: #ccc;
+      text-decoration: line-through;
+    }
+/*    input[type="checkbox"]{
+      display: none;
+    }*/
+/*    .ischeck{
+      display: inline-block;
+      margin-right: 10px;
+      width: 26px;
+      height: 26px;
+      border: 1px solid #eee;
+      border-radius: 30px;
+    }
+    .checked{
+      background:#4EEE94;
+    }*/
+    .toggle {
+      text-align: center;
+      width: 40px;
+      height: auto;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      margin: auto 0;
+      border: none; 
+      -webkit-appearance: none;
+      appearance: none;
+      cursor: pointer;
+    }
+    .details img{
+      margin-bottom:-8px; 
+      margin-right: 5px;
+    }
+
+
+    </style>
+  </head>
+  <body>
+  <div id="app">
+    <section id="signInAndSignUp" v-if="!currentUser" v-cloak>
+      <div class="title">高效Todo</div>
+      <ul class="checkbox">
+        <li><input type="radio" name="type" value="signUp" v-model="actionType">注册</li>
+        <li><input type="radio" name="type" value="login" v-model="actionType">登入</li>
+      </ul>
+      <div class="signUp" v-if="actionType=='signUp'"> <!-- 注意单引号，外面用了双引号，所以里面只能用单引号。 -->
+        <form @submit.prevent="signUp">  <!-- submit.prevent提交事件不再重载页面 -->
+          <div class="formRow">
+            <p>用户名</p><input type="text" v-model="formData.username">
+          </div>
+          <div class="formRow">
+            <p>密码</p><input class="ipt-psw" type="password" v-model="formData.password">
+          </div>
+          <div class="formActions">
+            <input class="submit"  type="submit" value="注册">
+          </div>
+        </form>
+      </div>
+
+      <div class="login" v-if="actionType=='login'">
+        <form @submit.prevent="login">
+          <div class="formRow">
+            <p>用户名</p><input type="text" v-model="formData.username">
+          </div>
+          <div class="formRow">
+            <p>密码</p><input class="ipt-psw" type="password" v-model="formData.password">
+          </div>
+          <div class="formActions">
+            <input class="submit" type="submit" value="登入">
+          </div>          
+        </form>
+      </div>
+    </section>
+
+    <section id="todo" v-if="currentUser" v-cloak>
+    
+    
+      <div class="newTask">
+        <input type="text" v-model="newTodo" @keyup.enter='addTodo' placeholder="输入待办事项，按回车确认添加">
+      </div>
+      
+      <ul class="todos" v-cloak v-if="todoList.length != 0">
+        <li v-for="(todo,index) in todoList" 
+            :class="{Done:todo.done}">
+          <input type="checkbox" 
+                   v-model="todo.done"
+                   class="toggle" 
+                   @change='saveOrUpdateTodos()'>
+                  
+          <span class="details">
+            <span v-if="todo.done"><img src="checked.png" alt="已完成"></span>
+            <span v-else><img src="notice.png" alt="未完成"></span>
+            {{index+1}}. {{todo.title}}
+          </span>
+
+          <span class="createdTime">{{todo.timeStr}}</span>
+          <span @click='removeTodo(todo)' class="delete">×</span>
+        </li>
+      </ul>
+
+      <div class="welcome" v-cloak>
+        你好，{{currentUser.username}} !
+        <input type="submit" value="退出登录" @click='logOut' class="logOut">
+      </div>
+    </section>
+  </div>
+  <script src="bundle.js"></script>
+</body>
+</html>
